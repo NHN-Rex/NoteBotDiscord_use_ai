@@ -14,8 +14,6 @@ import pandas as pd
 from thongke import generate_chart_pay_by_month, generate_chart_debt
 
 
-from slang_handle import handle_message, replace_slang_with_amount
-from final_core import extract_entities
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
@@ -48,6 +46,8 @@ def download_model_zip():
 download_model_zip()
 print("📦 Danh sách file trong models/:", os.listdir("models"))
 
+from slang_handle import handle_message, replace_slang_with_amount
+from final_core import extract_entities
 
 # Load slang mapping
 try:
@@ -90,8 +90,7 @@ def home():
     return "Bot đang chạy ngon lành!"
 
 def run():
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=8080)
 
 def keep_alive():
     t = Thread(target=run)
