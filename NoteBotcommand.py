@@ -46,6 +46,7 @@ def download_model_zip():
         print("Model đã tồn tại, không cần tải lại.")
 
 download_model_zip()
+print("📦 Danh sách file trong models/:", os.listdir("models"))
 
 
 # Load slang mapping
@@ -89,7 +90,8 @@ def home():
     return "Bot đang chạy ngon lành!"
 
 def run():
-    app.run(host='0.0.0.0', port=8080)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
     t = Thread(target=run)
