@@ -5,7 +5,7 @@ import os
 current_dir = os.path.dirname(os.path.abspath(__file__))  # ...\Desktop\bot
 parent_dir = os.path.dirname(current_dir)               # ...\Desktop
 
-checkpoint_path = os.path.join(parent_dir, "build_ai", "final_model1")
+checkpoint_path = os.path.join(parent_dir, "models/final_model1")
 tokenizer = AutoTokenizer.from_pretrained(checkpoint_path, local_files_only=True)
 model = AutoModelForTokenClassification.from_pretrained(checkpoint_path)
 labels = model.config.id2label

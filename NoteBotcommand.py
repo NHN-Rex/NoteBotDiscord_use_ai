@@ -21,7 +21,31 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
+#để model trên driver rồi tải về giải nén ra vào thư mục models
+import gdown
+import os
+import zipfile
 
+MODEL_ZIP_PATH = "models/final_model1.zip"
+MODEL_DIR = "models/final_model1"
+FILE_ID = "1g52cp41_de9yhUblXu3LM164cVzg22cB"
+URL = f"https://drive.google.com/uc?id={FILE_ID}"
+
+def download_model_zip():
+    if not os.path.exists(MODEL_DIR):
+        if not os.path.exists("models"):
+            os.makedirs("models")
+        print("Đang tải model zip bằng gdown...")
+        gdown.download(URL, MODEL_ZIP_PATH, quiet=False)
+        print("Tải xong, bắt đầu giải nén...")
+        with zipfile.ZipFile(MODEL_ZIP_PATH, 'r') as zip_ref:
+            zip_ref.extractall("models/")
+        print("Giải nén hoàn thành.")
+        os.remove(MODEL_ZIP_PATH)
+    else:
+        print("Model đã tồn tại, không cần tải lại.")
+
+download_model_zip()
 
 
 # Load slang mapping
@@ -31,10 +55,25 @@ try:
 except:
     slang_amount_mapping = {}
 
+
+
 # Google Sheets setup
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+
+# sử dụng trên render
+# Lấy nội dung JSON từ biến môi trường
+credentials_info = os.getenv("GOOGLE_CREDENTIALS_JSON")
+# Parse string JSON thành dict
+credentials_dict = json.loads(credentials_info)
+creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
 client_gs = gspread.authorize(creds)
+
+
+# sử dụng local
+# creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+# client_gs = gspread.authorize(creds)
+
+
 sheet = client_gs.open("chi_tieu_on_dinh").sheet1
 
 # Bot setup
