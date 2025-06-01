@@ -13,9 +13,9 @@ from pathlib import Path
 
 checkpoint_path = Path(__file__).parent / "../models/final_model1"
 
-tokenizer = AutoTokenizer.from_pretrained(checkpoint_path.resolve(), local_files_only=True)
+tokenizer = AutoTokenizer.from_pretrained(checkpoint_path.resolve(), local_files_only=True, repo_type='model')
 
-model = AutoModelForTokenClassification.from_pretrained(checkpoint_path, local_files_only=True)
+model = AutoModelForTokenClassification.from_pretrained(checkpoint_path, local_files_only=True, repo_type='model')
 
 labels = model.config.id2label
 
