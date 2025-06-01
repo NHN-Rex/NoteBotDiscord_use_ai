@@ -9,11 +9,11 @@ import os
 # tokenizer = AutoTokenizer.from_pretrained(checkpoint_path, local_files_only=True)
 # model = AutoModelForTokenClassification.from_pretrained(checkpoint_path)
 
-# dùng checkpoing_path kiểu relative
-checkpoint_path = "../models/final_model1"
+# Lấy đường dẫn tuyệt đối đến folder model
+checkpoint_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../models/final_model1"))
 
-tokenizer = AutoTokenizer.from_pretrained(checkpoint_path, local_files_only=True, use_auth_token=False)
-model = AutoModelForTokenClassification.from_pretrained(checkpoint_path, local_files_only=True, use_auth_token=False)
+tokenizer = AutoTokenizer.from_pretrained(checkpoint_path, local_files_only=True)
+model = AutoModelForTokenClassification.from_pretrained(checkpoint_path, local_files_only=True)
 
 labels = model.config.id2label
 
