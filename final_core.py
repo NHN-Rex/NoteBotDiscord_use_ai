@@ -12,8 +12,8 @@ import os
 # Lấy đường dẫn tuyệt đối đến folder model
 checkpoint_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../models/final_model1"))
 
-tokenizer = AutoTokenizer.from_pretrained(checkpoint_path, local_files_only=True)
-model = AutoModelForTokenClassification.from_pretrained(checkpoint_path, local_files_only=True)
+tokenizer = AutoTokenizer.from_pretrained(checkpoint_path, local_files_only=True, repo_type="model")
+model = AutoModelForTokenClassification.from_pretrained(checkpoint_path, local_files_only=True, repo_type="model")
 
 labels = model.config.id2label
 
