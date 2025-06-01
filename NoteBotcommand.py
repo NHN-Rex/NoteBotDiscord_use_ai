@@ -46,6 +46,8 @@ def download_model_zip():
 
 download_model_zip()
 print("📦 Danh sách file trong models/:", os.listdir("models"))
+print("📦 Danh sách file trong models/final_model1:")
+print(os.listdir("/opt/render/project/models/final_model1"))
 
 from slang_handle import handle_message, replace_slang_with_amount
 from final_core import extract_entities
