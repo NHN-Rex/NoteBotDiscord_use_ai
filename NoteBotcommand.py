@@ -177,4 +177,4 @@ async def thongkeno(ctx):
     await ctx.reply(f"📊 Thống kê nợ đến tháng {time}:", file=discord.File(chart_debt, 'chart.png'))
 # Chạy bot và web server
 keep_alive()
-bot.run("NoteBotDiscordToken")
+bot.run(os.getenv('NoteBotDiscordToken'))
