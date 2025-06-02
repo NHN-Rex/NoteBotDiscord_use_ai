@@ -183,7 +183,7 @@ def generate_chart_debt(name, data):
     plt.figure(figsize=(10,6))
     ax = sns.barplot(data=df_all, x='Tên người', y='Giá trị', palette='coolwarm', width=0.5)
 
-    plt.title(f'Số tiền liên quan đến {name}')
+    plt.title(f'Thống kê nợ của {name} đến {datetime.now().strftime("%d/%m/%Y")}')
     plt.ylabel('Số tiền (VNĐ)')
     plt.xlabel('')
 

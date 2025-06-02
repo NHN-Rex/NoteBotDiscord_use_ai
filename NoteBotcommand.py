@@ -138,10 +138,17 @@ async def on_message(message):
         username = {"harmonious_fox_17849": "Nghĩa",
             "doufang_8": "Phương",
             "ann_nguyen123": "Ngân"}
-        user = username.get(message.author.name, message.author.name)
+        
+        know_names = ["Ngân", "Phương", "Đạt", "Nhi", "Nghĩa"]
         if(data['recipients']=='cả nhóm' or data["recipients"]=="mn"):
             data['recipients'] = 'Mọi Người'
-        sheet.append_row([now, data['spending_category'], data['amount'], user, data['recipients'].title(), ""])
+
+        if data['payer'] in know_names:
+            payer = data["payer"]
+        else:
+            user = username.get(message.author.name, message.author.name)
+            payer = user
+        sheet.append_row([now, data['spending_category'], data['amount'], payer, data['recipients'].title(), ""])
 
         await message.reply(f"✅ Đã ghi chi tiêu: {data}.\nXem file google sheet [TẠI ĐÂY](https://docs.google.com/spreadsheets/d/1HtiGGXWZ6II9X_L3BxUh60e13isLuOhWL6NR1wcwvVk/edit?gid=0#gid=0)")
 
@@ -173,12 +180,12 @@ async def thongkechi(ctx, time=None):
 async def thongkeno(ctx):
     user = ctx.author.name
     data = sheet.get_all_values()
-    time = datetime.now().strftime("%m/%Y")
+    time = datetime.now().strftime("%d/%m/%Y")
     chart_debt = generate_chart_debt(user,data)
     if not chart_debt:
         await ctx.reply(f"{user} Không có dữ liệu.")
         return
-    await ctx.reply(f"📊 Thống kê nợ đến tháng {time}:", file=discord.File(chart_debt, 'chart.png'))
+    await ctx.reply(f"📊 Thống kê nợ của {user} đến tháng {time}:", file=discord.File(chart_debt, 'chart.png'))
 # Chạy bot và web server
 keep_alive()
 bot.run(os.getenv('NoteBotDiscordToken'))
