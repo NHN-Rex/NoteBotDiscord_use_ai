@@ -16,13 +16,24 @@ tokenizer = AutoTokenizer.from_pretrained(checkpoint_path, local_files_only=True
 
 # tokenizer = AutoTokenizer.from_pretrained(checkpoint_path.resolve(), local_files_only=True)
 
+# model = AutoModelForTokenClassification.from_pretrained(checkpoint_path, local_files_only=True)
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = AutoModelForTokenClassification.from_pretrained(checkpoint_path, local_files_only=True)
+model.to(device)
+model.eval()
 
 labels = model.config.id2label
 
 def extract_entities(text):
-    inputs = tokenizer(text, return_tensors="pt")
+    #chạy local
+    # inputs = tokenizer(text, return_tensors="pt")
+    # outputs = model(**inputs)
+
+    #fix để chạy trên render
+    inputs = tokenizer(text, return_tensors="pt").to(device)
     outputs = model(**inputs)
+
     predictions = torch.argmax(outputs.logits, dim=-1)
 
     tokens = tokenizer.convert_ids_to_tokens(inputs["input_ids"][0])
