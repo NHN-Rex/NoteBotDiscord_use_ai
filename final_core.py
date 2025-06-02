@@ -31,9 +31,10 @@ def extract_entities(text):
     # outputs = model(**inputs)
 
     #fix để chạy trên render
-    inputs = tokenizer(text, return_tensors="pt").to(device)
-    outputs = model(**inputs)
+    inputs = tokenizer(text, return_tensors="pt")
+    inputs_on_device = {k: v.to(device) for k, v in inputs.items()}
 
+    outputs = model(**inputs_on_device)
     predictions = torch.argmax(outputs.logits, dim=-1)
 
     tokens = tokenizer.convert_ids_to_tokens(inputs["input_ids"][0])
