@@ -151,14 +151,12 @@ def total_debt_by_person_in_month(data, month=None, year=None):
         df_group_detail = df.groupby(['Người nợ', 'Chủ nợ'])['Số tiền'].sum().reset_index().sort_values(by='Người nợ')
         return df_group_detail
 
-username = {"harmonious_fox_17849": "Nghĩa",
-            "doufang_8": "Phương",
-            "ann_nguyen123": "Ngân",}
 
+import name
 
 def generate_chart_debt(name, data):
     df_debt = total_debt_by_person_in_month(data)
-    name = username.get(name, name)  # Lấy tên người từ dict nếu có
+    name = name.username.get(name, name)  # Lấy tên người từ dict nếu có
     
     # Người mà name nợ
     df_person_r = df_debt[df_debt['Người nợ'] == name][['Chủ nợ', 'Số tiền']].copy()

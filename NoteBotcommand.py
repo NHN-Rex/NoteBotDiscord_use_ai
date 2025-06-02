@@ -13,7 +13,7 @@ import json, os, sys, re
 import gdown
 import pandas as pd
 from thongke import generate_chart_pay_by_month, generate_chart_debt
-
+import name
 
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -139,11 +139,11 @@ async def on_message(message):
             "doufang_8": "Phương",
             "ann_nguyen123": "Ngân"}
         
-        know_names = ["Ngân", "Phương", "Đạt", "Nhi", "Nghĩa"]
+        # know_names = ["Ngân", "Phương", "Đạt", "Nhi", "Nghĩa"]
         if(data['recipients']=='cả nhóm' or data["recipients"]=="mn"):
             data['recipients'] = 'Mọi Người'
 
-        if data['payer'].title() in know_names:
+        if data['payer'].title() in name.know_names:
             payer = data["payer"].title()
         else:
             user = username.get(message.author.name, message.author.name)
@@ -159,15 +159,6 @@ async def on_message(message):
 @bot.command()
 async def thongkechi(ctx, time=None):
     data = sheet.get_all_values()
-    #vẽ biểu đồ chi tiêu tháng
-    # if time is None:
-    #     pass
-    # else:
-    #     try:
-    #         time = datetime.strptime(time, "%m/%Y").strftime("%m/%Y")
-    #     except ValueError:
-    #         await ctx.reply("Vui lòng nhập định dạng là MM/YYYY.")
-    #         return
     chart_pay = generate_chart_pay_by_month(data, time)
     if not chart_pay:
         await ctx.reply(f"Không có dữ liệu chi tiêu trong tháng {time}.")
@@ -178,7 +169,8 @@ async def thongkechi(ctx, time=None):
 
 @bot.command()
 async def thongkeno(ctx):
-    user = ctx.author.name
+    # user = ctx.author.name
+    user = name.username.get(name, name)
     data = sheet.get_all_values()
     time = datetime.now().strftime("%d/%m/%Y")
     chart_debt = generate_chart_debt(user,data)
