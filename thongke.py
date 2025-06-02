@@ -5,6 +5,8 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.ticker import FuncFormatter
+import pytz
+timezone = pytz.timezone("Asia/Ho_Chi_Minh")
 
 
 def generate_chart_pay_by_month(data, time=None):
@@ -181,7 +183,7 @@ def generate_chart_debt(name, data):
     plt.figure(figsize=(10,6))
     ax = sns.barplot(data=df_all, x='Tên người', y='Giá trị', palette='coolwarm', width=0.5)
 
-    plt.title(f'Thống kê nợ của {name} đến {datetime.now().strftime("%d/%m/%Y")}')
+    plt.title(f'Thống kê nợ của {name} đến {datetime.now(timezone).strftime("%d/%m/%Y")}')
     plt.ylabel('Số tiền (VNĐ)')
     plt.xlabel('')
 
