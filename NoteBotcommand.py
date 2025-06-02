@@ -14,7 +14,8 @@ import gdown
 import pandas as pd
 from thongke import generate_chart_pay_by_month, generate_chart_debt
 import member_name
-
+import pytz
+timezone = pytz.timezone("Asia/Ho_Chi_Minh")
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
@@ -134,7 +135,7 @@ async def on_message(message):
             await message.reply("Không nhận diện được số tiền.")
             return
 
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        now = datetime.now(timezone).strftime("%d-%m-%Y %H:%M:%S")
         username = {"harmonious_fox_17849": "Nghĩa",
             "doufang_8": "Phương",
             "ann_nguyen123": "Ngân"}
@@ -172,12 +173,13 @@ async def thongkeno(ctx):
     user = ctx.author.name
     user = member_name.username.get(user)
     data = sheet.get_all_values()
-    time = datetime.now().strftime("%d/%m/%Y")
+
+    time = datetime.now(timezone).strftime("%d/%m/%Y")
     chart_debt = generate_chart_debt(user,data)
     if not chart_debt:
         await ctx.reply(f"{user} Không có dữ liệu.")
         return
-    await ctx.reply(f"📊 Thống kê nợ của {user} đến tháng {time}:", file=discord.File(chart_debt, 'chart.png'))
+    await ctx.reply(f"📊 Thống kê nợ của {user} đến {time}:", file=discord.File(chart_debt, 'chart.png'))
 # Chạy bot và web server
 keep_alive()
 bot.run(os.getenv('NoteBotDiscordToken'))
