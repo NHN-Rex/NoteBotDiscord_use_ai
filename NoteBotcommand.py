@@ -13,7 +13,7 @@ import json, os, sys, re
 import gdown
 import pandas as pd
 from thongke import generate_chart_pay_by_month, generate_chart_debt
-import name
+import member_name
 
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -143,7 +143,7 @@ async def on_message(message):
         if(data['recipients']=='cả nhóm' or data["recipients"]=="mn"):
             data['recipients'] = 'Mọi Người'
 
-        if data['payer'].title() in name.know_names:
+        if data['payer'].title() in member_name.know_names:
             payer = data["payer"].title()
         else:
             user = username.get(message.author.name, message.author.name)
@@ -169,8 +169,8 @@ async def thongkechi(ctx, time=None):
 
 @bot.command()
 async def thongkeno(ctx):
-    # user = ctx.author.name
-    user = name.username.get(name, name)
+    user = ctx.author.name
+    user = member_name.username.get(user)
     data = sheet.get_all_values()
     time = datetime.now().strftime("%d/%m/%Y")
     chart_debt = generate_chart_debt(user,data)
