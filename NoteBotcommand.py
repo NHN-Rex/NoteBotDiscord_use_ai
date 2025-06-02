@@ -143,8 +143,8 @@ async def on_message(message):
         if(data['recipients']=='cả nhóm' or data["recipients"]=="mn"):
             data['recipients'] = 'Mọi Người'
 
-        if data['payer'] in know_names:
-            payer = data["payer"]
+        if data['payer'].title() in know_names:
+            payer = data["payer"].title()
         else:
             user = username.get(message.author.name, message.author.name)
             payer = user
