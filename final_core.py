@@ -10,9 +10,8 @@ import os
 # model = AutoModelForTokenClassification.from_pretrained(checkpoint_path)
 
 from pathlib import Path
-
-checkpoint_path = Path("/opt/render/project/models/final_model1")
-tokenizer = AutoTokenizer.from_pretrained(str(checkpoint_path), local_files_only=True)
+checkpoint_path = Path("models/final_model1")
+tokenizer = AutoTokenizer.from_pretrained(checkpoint_path, local_files_only=True)
 
 
 # tokenizer = AutoTokenizer.from_pretrained(checkpoint_path.resolve(), local_files_only=True)
